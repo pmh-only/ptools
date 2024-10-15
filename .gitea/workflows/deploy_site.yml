@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: wget -qO- https://get.pnpm.io/install.sh | sh -
+      - run: wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
       - run: pnpm i
       - run: wget https://dl.min.io/client/mc/release/linux-arm64/mc -O /tmp/mc
       - run: chmod +x /tmp/mc
