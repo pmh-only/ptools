@@ -8,8 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          apt-get update -y
-          apt-get install -y npm
+          curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
+          apt-get install -y nodejs
       - run: npm i -g n && n lts
       - run: npm i
       - run: wget https://dl.min.io/client/mc/release/linux-arm64/mc -O /tmp/mc

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/node_modules/@fontsource-variable/jetbrains-mono/index.css">
+    <link rel="stylesheet" href="/node_modules/normalize.css/normalize.css">
     <title>THE PTOOLS - Better than your MOM</title>
   </head>
   <body>
@@ -16,12 +17,6 @@
         <div id="r"><p><button onclick="btn('urie')"><<<</button> urie (cmp: <input id="uriecmp" style="width: 20px;" type="checkbox">)</p><textarea id="urie"></textarea></div>
         <div id="r"><p><button onclick="btn('jsonbtf')"><<<</button> jsonbtf (sp: <input id="jsonbtfsp" style="width: 20px;" value="4">)</p><textarea id="jsonbtf"></textarea></div>
         <div id="r"><p><button onclick="btn('jsonsmp')"><<<</button> jsonsmp</p><textarea id="jsonsmp"></textarea></div>
-        <div id="r"><textarea id=""></textarea></div>
-        <div id="r"><textarea id=""></textarea></div>
-        <div id="r"><textarea id=""></textarea></div>
-        <div id="r"><textarea id=""></textarea></div>
-        <div id="r"><textarea id=""></textarea></div>
-        <div id="r"><h1>THE PTOOLS!!!!!!!!!</h1></div>
       </div>
     </div>
 
@@ -35,12 +30,12 @@
         width: 100%;
         height: 100%
       }
-
+      
       #container {
         display: flex;
-        background-color: #212121;
         color: #fafafa;
-        font-family: Arial, Helvetica, sans-serif;
+        background-color: #212121;
+        font-family: 'JetBrains Mono Variable', monospace;
       }
 
       #container > * {
@@ -52,6 +47,8 @@
         grid-template-columns: 1fr 1fr;
         gap: 10px;
         padding: 10px;
+        max-height: 100%;
+        overflow-x: scroll;
       }
 
       #q > * {
@@ -60,6 +57,7 @@
 
       #r {
         display: flex;
+        min-height: 200px;
         flex-direction: column;
         background-color: #1e1e1e;
         border-radius: 4px;
@@ -72,10 +70,31 @@
         resize: none;
         background-color: transparent;
         color: #fafafa;
+        padding: 10px;
       }
 
       #r > textarea:focus {
         outline: none;
+      }
+
+      #r > p {
+        padding: 10px;
+        background-color: #323232;
+        border-radius: 4px;
+      }
+
+      #r button {
+        border: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #1683ff;
+        color: white;
+        margin-right: 6px;
+      }
+
+      #r button:hover {
+        background-color: #1c74da;
       }
     </style>
 
@@ -86,14 +105,15 @@
 			require(['vs/editor/editor.main'], function () {
 				var editor = monaco.editor.create(document.getElementById('main'), {
 					value: '',
-					language: 'javascript',
+					language: 'json',
           automaticLayout: true,
           minimap: { enabled: false },
           fontSize: 16,
           theme: "vs-dark",
           scrollBeyondLastLine: false,
           fontFamily: 'JetBrains Mono Variable',
-          fontLigatures: true
+          fontLigatures: true,
+          wordWrap: true
 				});
 
         function render () {
