@@ -10,5 +10,5 @@ jobs:
       - run: wget https://dl.min.io/client/mc/release/linux-arm64/mc -O /tmp/mc
       - run: chmod +x /tmp/mc
       - run: /tmp/mc alias set minio http://minio-service.minio.svc.cluster.local:9000 ${{ secrets.MINIO_ACCESS_KEY }} ${{ secrets.MINIO_SECRET_KEY }}
-      - run: /tmp/mc mirror $PWD/ minio/ptools
+      - run: /tmp/mc mirror $PWD/ minio/ptools --exclude '.git/*' --exclude '.gitea/*'
 
