@@ -21,6 +21,10 @@
     </div>
 
     <style>
+      :root {
+        background-color: #212121;
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -28,7 +32,8 @@
 
       html, body, #container {
         width: 100%;
-        height: 100%
+        height: 100%;
+        user-select: none;
       }
       
       #container {
@@ -40,6 +45,10 @@
 
       #container > * {
         flex: 1;
+      }
+
+      #main {
+        background-color: #1e1e1e;
       }
 
       #q {
@@ -88,13 +97,26 @@
         padding: 6px 10px;
         border-radius: 4px;
         cursor: pointer;
-        background-color: #1683ff;
+        background-color: #ff1696;
         color: white;
         margin-right: 6px;
       }
 
       #r button:hover {
-        background-color: #1c74da;
+        background-color: #da1c9b;
+      }
+
+      #r input {
+        background-color: transparent;
+        color: #fafafa;
+        border: none;
+        border-bottom: 1px solid #fafafa;
+        text-align: center;
+        accent-color: #ff1696;
+      }
+
+      #r input:focus {
+        outline: none;
       }
     </style>
 
@@ -104,7 +126,7 @@
 
 			require(['vs/editor/editor.main'], function () {
 				var editor = monaco.editor.create(document.getElementById('main'), {
-					value: '',
+					value: 'Type Something Here',
 					language: 'json',
           automaticLayout: true,
           minimap: { enabled: false },
@@ -116,6 +138,7 @@
           wordWrap: true
 				});
 
+        render()
         function render () {
           const value = editor.getValue()
           try { document.getElementById('base64d').value = atob(value) } catch { document.getElementById('base64d').value ='(err)' }
