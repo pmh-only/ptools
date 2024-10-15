@@ -1,1 +1,123 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/node_modules/@fontsource-variable/jetbrains-mono/index.css">
+    <title>my fucking ptools</title>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main"></div>
+      <div id="q">
+        <div id="r"><p>base64d</p><textarea id="base64d"></textarea></div>
+        <div id="r"><p>base64e</p><textarea id="base64e"></textarea></div>
+        <div id="r"><p>urid (cmp: <input id="uridcmp" style="width: 20px;" type="checkbox">)</p><textarea id="urid"></textarea></div>
+        <div id="r"><p>urie (cmp: <input id="uriecmp" style="width: 20px;" type="checkbox">)</p><textarea id="urie"></textarea></div>
+        <div id="r"><p>jsonbtf (sp: <input id="jsonbtfsp" style="width: 20px;" value="4">)</p><textarea id="jsonbtf"></textarea></div>
+        <div id="r"><p>jsonsmp</p><textarea id="jsonsmp"></textarea></div>
+        <div id="r"><textarea id=""></textarea></div>
+        <div id="r"><textarea id=""></textarea></div>
+        <div id="r"><textarea id=""></textarea></div>
+        <div id="r"><textarea id=""></textarea></div>
+        <div id="r"><textarea id=""></textarea></div>
+        <div id="r"><textarea id=""></textarea></div>
+        <div id="r"><textarea id=""></textarea></div>
+        <div id="r"><textarea id=""></textarea></div>
+      </div>
+    </div>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html, body, #container {
+        width: 100%;
+        height: 100%
+      }
+
+      #container {
+        display: flex;
+        background-color: #212121;
+        color: #fafafa;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      #container > * {
+        flex: 1;
+      }
+
+      #q {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 10px;
+      }
+
+      #q > * {
+        flex: 1;
+      }
+
+      #r {
+        display: flex;
+        flex-direction: column;
+        background-color: #1e1e1e;
+        border-radius: 4px;
+        padding: 10px;
+      }
+
+      #r > textarea {
+        flex: 1;
+        border: none;
+        resize: none;
+        background-color: transparent;
+        color: #fafafa;
+      }
+
+      #r > textarea:focus {
+        outline: none;
+      }
+    </style>
+
+		<script src="/node_modules/monaco-editor/min/vs/loader.js"></script>
+		<script>
+			require.config({ paths: { vs: '/node_modules/monaco-editor/min/vs' } });
+
+			require(['vs/editor/editor.main'], function () {
+				var editor = monaco.editor.create(document.getElementById('main'), {
+					value: '',
+					language: 'javascript',
+          automaticLayout: true,
+          minimap: { enabled: false },
+          fontSize: 16,
+          theme: "vs-dark",
+          scrollBeyondLastLine: false,
+          fontFamily: 'JetBrains Mono Variable',
+          fontLigatures: true
+				});
+
+        function render () {
+          const value = editor.getValue()
+          try { document.getElementById('base64d').value = atob(value) } catch { document.getElementById('base64d').value ='(err)' }
+          try { document.getElementById('base64e').value = btoa(value) } catch { document.getElementById('base64e').value ='(err)' }
+          try { document.getElementById('urid').value = document.getElementById('uridcmp').checked ? decodeURIComponent(value) : decodeURI(value) } catch { document.getElementById('urid').value = '(err)' }
+          try { document.getElementById('urie').value = document.getElementById('uriecmp').checked ? encodeURIComponent(value) : encodeURI(value) } catch { document.getElementById('urie').value = '(err)' }
+          try { document.getElementById('jsonbtf').value = JSON.stringify(JSON.parse(value), null, parseInt(document.getElementById('jsonbtfsp').value)) } catch { document.getElementById('jsonbtf').value ='(err)' }
+          try { document.getElementById('jsonsmp').value = JSON.stringify(JSON.parse(value)) } catch { document.getElementById('jsonsmp').value ='(err)' }
+        }
+
+        try {
+          document.getElementById('uridcmp').onchange = () => render()
+          document.getElementById('uriecmp').onchange = () => render()
+          document.getElementById('jsonbtfsp').oninput = () => render()
+        } catch{}
+
+        editor.getModel().onDidChangeContent((event) => {
+          render()
+        });
+			});
+		</script>
+  </body>
+</html>
