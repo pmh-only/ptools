@@ -151,9 +151,10 @@
 
         window.btn = (id) => {
           const text = document.getElementById(id).value
-          
+
           editor.executeEdits('ptools', [{ identifier: 'delete', range: new monaco.Range(1, 1, 1000000000, 1), text: '', forceMoveMarkers: true }]);
           editor.executeEdits('ptools', [{ identifier: 'insert', range: new monaco.Range(1, 1, 1, 1), text, forceMoveMarkers: true }]);
+          editor.pushUndoStop()
         }
 
         try {
