@@ -1,0 +1,13 @@
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  deploy_site:
+    runs-on: ubuntu-latest
+    steps:
+      - run: wget https://dl.min.io/client/mc/release/linux-arm64/mc -o /tmp/mc
+      - run: chmod +x /tmp/mc
+      - run: mc alias set minio https://minio.pmh.codes ${{ secrets.MINIO_ACCESS_KEY }} ${{ secrets.MINIO_SECRET_KEY }}
+      - run: mc cp -r . minio/ptools
+
