@@ -4,26 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/node_modules/@fontsource-variable/jetbrains-mono/index.css">
-    <title>my fucking ptools</title>
+    <title>THE PTOOLS - Better than your MOM</title>
   </head>
   <body>
     <div id="container">
       <div id="main"></div>
       <div id="q">
-        <div id="r"><p>base64d</p><textarea id="base64d"></textarea></div>
-        <div id="r"><p>base64e</p><textarea id="base64e"></textarea></div>
-        <div id="r"><p>urid (cmp: <input id="uridcmp" style="width: 20px;" type="checkbox">)</p><textarea id="urid"></textarea></div>
-        <div id="r"><p>urie (cmp: <input id="uriecmp" style="width: 20px;" type="checkbox">)</p><textarea id="urie"></textarea></div>
-        <div id="r"><p>jsonbtf (sp: <input id="jsonbtfsp" style="width: 20px;" value="4">)</p><textarea id="jsonbtf"></textarea></div>
-        <div id="r"><p>jsonsmp</p><textarea id="jsonsmp"></textarea></div>
+        <div id="r"><p><button onclick="btn('base64d')"><<<</button> base64d</p><textarea id="base64d"></textarea></div>
+        <div id="r"><p><button onclick="btn('base64e')"><<<</button> base64e</p><textarea id="base64e"></textarea></div>
+        <div id="r"><p><button onclick="btn('urid')"><<<</button> urid (cmp: <input id="uridcmp" style="width: 20px;" type="checkbox">)</p><textarea id="urid"></textarea></div>
+        <div id="r"><p><button onclick="btn('urie')"><<<</button> urie (cmp: <input id="uriecmp" style="width: 20px;" type="checkbox">)</p><textarea id="urie"></textarea></div>
+        <div id="r"><p><button onclick="btn('jsonbtf')"><<<</button> jsonbtf (sp: <input id="jsonbtfsp" style="width: 20px;" value="4">)</p><textarea id="jsonbtf"></textarea></div>
+        <div id="r"><p><button onclick="btn('jsonsmp')"><<<</button> jsonsmp</p><textarea id="jsonsmp"></textarea></div>
         <div id="r"><textarea id=""></textarea></div>
         <div id="r"><textarea id=""></textarea></div>
         <div id="r"><textarea id=""></textarea></div>
         <div id="r"><textarea id=""></textarea></div>
         <div id="r"><textarea id=""></textarea></div>
-        <div id="r"><textarea id=""></textarea></div>
-        <div id="r"><textarea id=""></textarea></div>
-        <div id="r"><textarea id=""></textarea></div>
+        <div id="r"><h1>THE PTOOLS!!!!!!!!!</h1></div>
       </div>
     </div>
 
@@ -107,6 +105,9 @@
           try { document.getElementById('jsonbtf').value = JSON.stringify(JSON.parse(value), null, parseInt(document.getElementById('jsonbtfsp').value)) } catch { document.getElementById('jsonbtf').value ='(err)' }
           try { document.getElementById('jsonsmp').value = JSON.stringify(JSON.parse(value)) } catch { document.getElementById('jsonsmp').value ='(err)' }
         }
+
+        window.btn = (id) =>
+          editor.setValue(document.getElementById(id).value)
 
         try {
           document.getElementById('uridcmp').onchange = () => render()
