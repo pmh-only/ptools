@@ -145,12 +145,16 @@
           try { document.getElementById('base64e').value = btoa(value) } catch { document.getElementById('base64e').value ='(err)' }
           try { document.getElementById('urid').value = document.getElementById('uridcmp').checked ? decodeURIComponent(value) : decodeURI(value) } catch { document.getElementById('urid').value = '(err)' }
           try { document.getElementById('urie').value = document.getElementById('uriecmp').checked ? encodeURIComponent(value) : encodeURI(value) } catch { document.getElementById('urie').value = '(err)' }
-          try { document.getElementById('jsonbtf').value = JSON.stringify(JSON.parse(value), null, parseInt(document.getElementById('jsonbtfsp').value)) } catch { document.getElementById('jsonbtf').value ='(err)' }
+          try { document.getElementById('jsonbtf').value = value.split('\n').map((v) => JSON.stringify(JSON.parse(v), null, parseInt(document.getElementById('jsonbtfsp').value))).join('\n') } catch { document.getElementById('jsonbtf').value ='(err)' }
           try { document.getElementById('jsonsmp').value = JSON.stringify(JSON.parse(value)) } catch { document.getElementById('jsonsmp').value ='(err)' }
         }
 
-        window.btn = (id) =>
-          editor.setValue(document.getElementById(id).value)
+        window.btn = (id) => {
+          const text = document.getElementById(id).value
+          
+          editor.executeEdits('ptools', [{ identifier: 'delete', range: new monaco.Range(1, 1, 1000000000, 1), text: '', forceMoveMarkers: true }]);
+          editor.executeEdits('ptools', [{ identifier: 'insert', range: new monaco.Range(1, 1, 1, 1), text, forceMoveMarkers: true }]);
+        }
 
         try {
           document.getElementById('uridcmp').onchange = () => render()
