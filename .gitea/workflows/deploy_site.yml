@@ -6,6 +6,7 @@ jobs:
   deploy_site:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - run: wget https://dl.min.io/client/mc/release/linux-arm64/mc -O /tmp/mc
       - run: chmod +x /tmp/mc
       - run: /tmp/mc alias set minio http://minio-service.minio.svc.cluster.local:9000 ${{ secrets.MINIO_ACCESS_KEY }} ${{ secrets.MINIO_SECRET_KEY }}
