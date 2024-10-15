@@ -7,8 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
-      - run: /root/.local/share/pnpm/pnpm i
+      - run: |
+          apt-get update -y
+          apt-get install -y npm
+      - run: npm i -g n && n lts
+      - run: npm i
       - run: wget https://dl.min.io/client/mc/release/linux-arm64/mc -O /tmp/mc
       - run: chmod +x /tmp/mc
       - run: /tmp/mc alias set minio http://minio-service.minio.svc.cluster.local:9000 ${{ secrets.MINIO_ACCESS_KEY }} ${{ secrets.MINIO_SECRET_KEY }}
