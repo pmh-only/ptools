@@ -6,8 +6,8 @@ jobs:
   deploy_site:
     runs-on: ubuntu-latest
     steps:
-      - run: wget https://dl.min.io/client/mc/release/linux-arm64/mc -o /tmp/mc
+      - run: wget https://dl.min.io/client/mc/release/linux-arm64/mc -O /tmp/mc
       - run: chmod +x /tmp/mc
-      - run: /tmp/mc alias set minio https://minio.pmh.codes ${{ secrets.MINIO_ACCESS_KEY }} ${{ secrets.MINIO_SECRET_KEY }}
+      - run: /tmp/mc alias set minio http://minio-service.minio.svc.cluster.local:9000 ${{ secrets.MINIO_ACCESS_KEY }} ${{ secrets.MINIO_SECRET_KEY }}
       - run: /tmp/mc cp -r . minio/ptools
 
