@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/node_modules/@fontsource-variable/jetbrains-mono/index.css">
+    <link rel="stylesheet" href="/node_modules/normalize.css/normalize.css">
+    <title>THE PTOOLS - this is not a cheat bro</title>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main"></div>
+      <div id="q">
+        <div id="r"><p><button>The PTOOLS</button> by Minhyeok Park &copy;</p><textarea placeholder="Yea 'Reinventing the wheel' but Improved.&#10;&#10;(take a note here)"></textarea></div>
+        <div id="r"><p><button onclick="btn('regexp')"><<<</button> regexp</p><textarea id="regexp"></textarea></div>
+        <div id="r"><p><button onclick="btn('base64d')"><<<</button> base64d</p><textarea id="base64d"></textarea></div>
+        <div id="r"><p><button onclick="btn('base64e')"><<<</button> base64e</p><textarea id="base64e"></textarea></div>
+        <div id="r"><p><button onclick="btn('urid')"><<<</button> urid (cmp: <input id="uridcmp" style="width: 20px;" type="checkbox">)</p><textarea id="urid"></textarea></div>
+        <div id="r"><p><button onclick="btn('urie')"><<<</button> urie (cmp: <input id="uriecmp" style="width: 20px;" type="checkbox">)</p><textarea id="urie"></textarea></div>
+        <div id="r"><p><button onclick="btn('jsonbtf')"><<<</button> jsonbtf (sp: <input id="jsonbtfsp" style="width: 20px;" value="4">)</p><textarea id="jsonbtf"></textarea></div>
+        <div id="r"><p><button onclick="btn('jsonsmp')"><<<</button> jsonsmp</p><textarea id="jsonsmp"></textarea></div>
+        <div id="r"><p><button onclick="btn('json2yml')"><<<</button> json2yml</p><textarea id="json2yml"></textarea></div>
+        <div id="r"><p><button onclick="btn('yml2json')"><<<</button> yml2json</p><textarea id="yml2json"></textarea></div>
+        <div id="r"><p><button onclick="btn('escape')"><<<</button> escape</p><textarea id="escape"></textarea></div>
+        <div id="r"><p><button onclick="btn('unescape')"><<<</button> unescape</p><textarea id="unescape"></textarea></div>
+        <div id="r"><p><button onclick="btn('gzipd')"><<<</button> gzipd</p><textarea id="gzipd"></textarea></div>
+      </div>
+    </div>
+
+    <style>
+      :root {
+        background-color: #212121;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html, body, #container {
+        width: 100%;
+        height: 100%;
+        user-select: none;
+      }
+      
+      #container {
+        display: flex;
+        color: #fafafa;
+        background-color: #212121;
+        font-family: 'JetBrains Mono Variable', monospace;
+      }
+
+      #container > * {
+        flex: 1;
+      }
+
+      #main {
+        background-color: #1e1e1e;
+      }
+
+      #q {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 10px;
+        max-height: 100%;
+        overflow-x: scroll;
+      }
+
+      #q > * {
+        flex: 1;
+      }
+
+      #r {
+        display: flex;
+        min-height: 200px;
+        flex-direction: column;
+        background-color: #1e1e1e;
+        border-radius: 4px;
+        padding: 10px;
+      }
+
+      #r > textarea {
+        flex: 1;
+        border: none;
+        resize: none;
+        background-color: transparent;
+        color: #fafafa;
+        padding: 10px;
+      }
+
+      #r > textarea:focus {
+        outline: none;
+      }
+
+      #r > p {
+        padding: 10px;
+        background-color: #323232;
+        border-radius: 4px;
+      }
+
+      #r button {
+        border: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #ff1696;
+        color: white;
+        margin-right: 6px;
+      }
+
+      #r button:hover {
+        background-color: #da1c9b;
+      }
+
+      #r input {
+        background-color: transparent;
+        color: #fafafa;
+        border: none;
+        border-bottom: 1px solid #fafafa;
+        text-align: center;
+        accent-color: #ff1696;
+      }
+
+      #r input:focus {
+        outline: none;
+      }
+    </style>
+
+		<script src="/node_modules/monaco-editor/min/vs/loader.js"></script>
+		<script type="module">
+      import JSON5 from '/node_modules/json5/dist/index.min.mjs'
+      import YAML from '/node_modules/yaml/browser/index.js'
+
+      window.history.replaceState({}, '', '/')
+
+			require.config({ paths: { vs: '/node_modules/monaco-editor/min/vs' } });
+
+			require(['vs/editor/editor.main'], function () {
+				var editor = monaco.editor.create(document.getElementById('main'), {
+					value: 'Type Something Here',
+					language: 'yaml',
+          automaticLayout: true,
+          minimap: { enabled: false },
+          fontSize: 16,
+          theme: "vs-dark",
+          scrollBeyondLastLine: false,
+          fontFamily: 'JetBrains Mono Variable',
+          fontLigatures: true,
+          wordWrap: true
+				});
+
+        async function DecompressBlob(blob2) {
+          const byteCharacters = atob(blob2);
+          const byteNumbers = new Array(byteCharacters.length);
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          const byteArray = new Uint8Array(byteNumbers);
+          const blob = new Blob([byteArray]);
+
+          const ds = new DecompressionStream("gzip");
+          const decompressedStream = blob.stream().pipeThrough(ds);
+          return await new Response(decompressedStream).blob();
+        }
+
+
+        render()
+        function render () {
+          const value = editor.getValue()
+          try { document.getElementById('regexp').value = value.split('\r\n\r\n').slice(0, 2).join('\n\n') + '\n\n' + ((value.split('\r\n\r\n')[1] || '').split('\r\n').map(v => JSON.stringify(new RegExp(value.split('\r\n\r\n')[0]).exec(v)?.groups)).join('\n')) } catch (err) { document.getElementById('regexp').value = err ?? '(err)' }
+          try { document.getElementById('base64d').value = atob(value) } catch (err) { document.getElementById('base64d').value = err ?? '(err)' }
+          try { document.getElementById('base64e').value = btoa(value) } catch (err) { document.getElementById('base64e').value = err ?? '(err)' }
+          try { document.getElementById('urid').value = document.getElementById('uridcmp').checked ? decodeURIComponent(value) : decodeURI(value) } catch (err) { document.getElementById('urid').value = err ?? '(err)' }
+          try { document.getElementById('urie').value = document.getElementById('uriecmp').checked ? encodeURIComponent(value) : encodeURI(value) } catch (err) { document.getElementById('urie').value = err ?? '(err)' }
+          try { document.getElementById('jsonbtf').value = value.split('\n').map((v) => JSON.stringify(JSON5.parse(v), null, parseInt(document.getElementById('jsonbtfsp').value))).join('\n') } catch (err) { document.getElementById('jsonbtf').value = err ?? '(err)' }
+          try { document.getElementById('jsonsmp').value = JSON.stringify(JSON5.parse(value)) } catch (err) { document.getElementById('jsonsmp').value = err ?? '(err)' }
+          try { document.getElementById('json2yml').value = YAML.stringify(JSON5.parse(value)) } catch (err) { document.getElementById('json2yml').value = err ?? '(err)' }
+          try { document.getElementById('yml2json').value = JSON.stringify(YAML.parse(value)) } catch (err) { document.getElementById('yml2json').value = err ?? '(err)' }
+          try { document.getElementById('escape').value = JSON.stringify(value) } catch (err) { document.getElementById('escape').value = err ?? '(err)' }
+          try { document.getElementById('unescape').value = JSON5.parse(value) } catch (err) { document.getElementById('unescape').value = err ?? '(err)' }
+          try { DecompressBlob(value).then((v) => v.text()).then((v) => document.getElementById('gzipd').value = v).catch((err) => document.getElementById('gzipd').value = err ?? '(err)') } catch (err) { document.getElementById('gzipd').value = err ?? '(err)' }
+        }
+
+        window.btn = (id) => {
+          const text = document.getElementById(id).value
+
+          editor.executeEdits('ptools', [{ identifier: 'delete', range: new monaco.Range(1, 1, 1000000000, 1), text: '', forceMoveMarkers: true }]);
+          editor.executeEdits('ptools', [{ identifier: 'insert', range: new monaco.Range(1, 1, 1, 1), text, forceMoveMarkers: true }]);
+          editor.pushUndoStop()
+        }
+
+        try {
+          document.getElementById('uridcmp').onchange = () => render()
+          document.getElementById('uriecmp').onchange = () => render()
+          document.getElementById('jsonbtfsp').oninput = () => render()
+        } catch{}
+
+        editor.getModel().onDidChangeContent((event) => {
+          render()
+        });
+			});
+		</script>
+  </body>
+</html>
