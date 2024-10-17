@@ -120,7 +120,6 @@
 			require(['vs/editor/editor.main'], function () {
 				var editor = monaco.editor.create(document.getElementById('main'), {
 					value: 'Type Something Here',
-					language: 'yaml',
           automaticLayout: true,
           minimap: { enabled: false },
           fontSize: 16,
@@ -145,7 +144,7 @@
             try { document.getElementById('jsonsmp').value = JSON.stringify(JSON5.parse(value)) } catch (err) { document.getElementById('jsonsmp').value = err ?? '(err)' }
             try { document.getElementById('json2yml').value = YAML.stringify(JSON5.parse(value)) } catch (err) { document.getElementById('json2yml').value = err ?? '(err)' }
             try { document.getElementById('yml2json').value = JSON.stringify(YAML.parse(value)) } catch (err) { document.getElementById('yml2json').value = err ?? '(err)' }
-          }, 1000)
+          }, Math.random() * 500)
         }
 
         editor.getModel().onDidChangeContent((event) => {
