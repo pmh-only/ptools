@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+
+  width: 100vw;
+  height: 100dvh;
+
+  > * {
+    flex: 1;
+  }
+
+  @media (max-width: 1200px) {
+    & {
+      flex-direction: column;
+    }
+  }
+}
