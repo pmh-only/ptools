@@ -8,11 +8,14 @@ export const Button = styled.button`
   background-color: #ff1696;
   color: white;
 
+  transition: background-color 0.25s ease-out;
+
   &:hover {  
     background-color: #da1c9b;
   }
 
-  &:placeholder {
-    color: gray;
+  &:disabled {
+    background-color: gray;
+    cursor: inherit;
   }
 `

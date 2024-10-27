@@ -12,6 +12,7 @@
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.1.1",
     "@monaco-editor/react": "^4.6.0",
+    "clsx": "^2.1.1",
     "framer-motion": "^11.11.10",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",

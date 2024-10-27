@@ -4,7 +4,7 @@
   display: flex;
   padding: 10px;
   flex-direction: column;
-  min-height: 300px;
+  min-height: 250px;
 
   .toolbar {
     display: flex;
@@ -16,7 +16,7 @@
 
     .name {
       font-size: inherit;
-      padding: 14px 0px;
+      padding: 14px 6px;
     }
 
     .options {
@@ -32,7 +32,12 @@
 
       .optionItem {
         display: flex;
+        gap: 6px;
       }
     }
+  }
+  
+  .error {
+    color: #ffcaca;
   }
 }
