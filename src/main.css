@@ -10,3 +10,14 @@ h1, h2, h3, h4, h5, h6, p, pre, textarea, input, button, li, ul, ol {
   margin: 0;
   list-style-type: none;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}

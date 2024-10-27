@@ -16,7 +16,7 @@ export const Editor: FC = () => {
         loading={<></>}
         value={value}
         language="yaml"
-        onChange={(v) => setValue(v ?? '')}
+        onChange={(v) => setValue(v?.trim() ?? '')}
         options={{
           automaticLayout: true,
           lineNumbersMinChars: 3,
@@ -31,7 +31,7 @@ export const Editor: FC = () => {
           smoothScrolling: true,
           cursorSmoothCaretAnimation: 'on',
           cursorBlinking: 'smooth',
-          cursorStyle: 'block'
+          cursorStyle: 'line'
         }}
         theme="vs-dark" />
     </motion.div>

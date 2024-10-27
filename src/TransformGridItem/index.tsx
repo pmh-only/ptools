@@ -1,12 +1,21 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import style from './style.module.scss'
 import { Button } from "../Components/Button";
 import { Input } from "../Components/Input";
 import { TextArea } from "../Components/TextArea";
-import { TransformCheckboxOption, TransformOption, TransformTextboxOption, WrappedTransform } from "../Transforms/Transform";
+import clsx from "clsx";
 import { useRecoilState } from "recoil";
 import { EditorValueState } from "../GlobalStates/EditorValueState";
-import clsx from "clsx";
+import {
+  isTransformCheckboxOption,
+  isTransformIntboxOption,
+  isTransformTextboxOption,
+  TransformCheckboxOption,
+  TransformIntboxOption,
+  TransformTextboxOption,
+  WrappedTransform,
+  WrappedTransformResult
+} from "../Transforms/Transform";
 
 interface TransformGridItemProp {
   transform: WrappedTransform
@@ -14,9 +23,17 @@ interface TransformGridItemProp {
 
 export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
   const [value, setValue] = useRecoilState(EditorValueState)
-  const [options, setOptions] = useState(new Map<string, TransformOption>())
-
-  const result = transform.fn(value, options)
+  const [options, setOptions] = useState(transform.options)
+  const [result, setResult] = useState<WrappedTransformResult>({
+    error: false,
+    value: ''
+  })
+  
+  useEffect(() => {
+    transform
+      .fn(value, options)
+      .then(setResult.bind(this))
+  }, [value, options])
 
   const onCheckboxOptionChanged =
     (option: TransformCheckboxOption) =>
@@ -42,6 +59,18 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
 
     setOptions(new Map(options))
   }
+  
+  const onIntboxOptionChanged =
+    (option: TransformIntboxOption) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+    
+    options.set(option.key, {
+      ...option,
+      value: parseInt(event.target.value)
+    })
+
+    setOptions(new Map(options))
+  }
 
   const onForwardButtonPressed = () => {
     if (result.error)
@@ -60,33 +89,49 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
         <h2 className={style.name}>{transform.name}</h2>
         
         <div className={style.options}>
-          {transform.options
-            ?.filter((option) => option.type === 'CHECKBOX')
+          {[...options.values()]
+            ?.filter(isTransformCheckboxOption)
             .map((option, i) => (
               <label key={i} className={style.optionItem}>
                 <p>{option.label ?? option.key}:</p>
 
                 <Input
+                  checked={option.value}
                   onChange={onCheckboxOptionChanged(option)}
                   type="checkbox" />
               </label>))}
           
-          {transform.options
-            ?.filter((option) => option.type === 'TEXTBOX')
+          {[...options.values()]
+            ?.filter(isTransformTextboxOption)
             .map((option, i) => (
               <label key={i} className={style.optionItem}>
                 <p>{option.label ?? option.key}:</p>
 
                 <Input
+                  value={option.value}
                   onChange={onTextboxOptionChanged(option)}
-                  type="checkbox" />
+                  type="text" />
+              </label>))}
+
+              
+          {[...options.values()]
+            ?.filter(isTransformIntboxOption)
+            .map((option, i) => (
+              <label key={i} className={style.optionItem}>
+                <p>{option.label ?? option.key}:</p>
+
+                <Input
+                  min={1}
+                  value={option.value}
+                  onChange={onIntboxOptionChanged(option)}
+                  type="number" />
               </label>))}
         </div>
       </div>
 
       <TextArea
-        value={result.value}
         readOnly
+        value={result.value}
         placeholder="(empty)"
         className={clsx(result.error && style.error)} />
     </div>
