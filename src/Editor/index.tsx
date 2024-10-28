@@ -23,7 +23,6 @@ export const Editor: FC = () => {
           minimap: { enabled: false },
           theme: "vs-dark",
           fontSize: 24,
-          scrollBeyondLastLine: false,
           fontFamily: 'JetBrains Mono Variable',
           fontLigatures: true,
           wordWrap: "on",
