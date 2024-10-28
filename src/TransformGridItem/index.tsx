@@ -145,8 +145,6 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
                 key={i}
                 onChange={onRadioOptionChanged(option)}
                 className={style.optionItem}>
-                <p>{option.label ?? option.key}:</p>
-
                 {option.radios.map((radio, i2) => (
                   <label key={i2}>
                     <p>{radio.label ?? radio.value}:</p>
