@@ -7,11 +7,9 @@ import clsx from "clsx";
 import { useRecoilState } from "recoil";
 import { EditorValueState } from "../GlobalStates/EditorValueState";
 import {
-  isTransformCheckboxOption,
-  isTransformIntboxOption,
-  isTransformTextboxOption,
   TransformCheckboxOption,
   TransformIntboxOption,
+  TransformRadioOption,
   TransformTextboxOption,
   WrappedTransform,
   WrappedTransformResult
@@ -71,6 +69,18 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
 
     setOptions(new Map(options))
   }
+  
+  const onRadioOptionChanged =
+    (option: TransformRadioOption) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+    
+    options.set(option.key, {
+      ...option,
+      value: event.target.value
+    })
+
+    setOptions(new Map(options))
+  }
 
   const onForwardButtonPressed = () => {
     if (result.error)
@@ -90,7 +100,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
         
         <div className={style.options}>
           {[...options.values()]
-            ?.filter(isTransformCheckboxOption)
+            ?.filter((v) => v.type === 'CHECKBOX')
             .map((option, i) => (
               <label key={i} className={style.optionItem}>
                 <p>{option.label ?? option.key}:</p>
@@ -102,7 +112,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
               </label>))}
           
           {[...options.values()]
-            ?.filter(isTransformTextboxOption)
+            ?.filter((v) => v.type === 'TEXTBOX')
             .map((option, i) => (
               <label key={i} className={style.optionItem}>
                 <p>{option.label ?? option.key}:</p>
@@ -115,7 +125,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
 
               
           {[...options.values()]
-            ?.filter(isTransformIntboxOption)
+            ?.filter((v) => v.type === 'INTBOX')
             .map((option, i) => (
               <label key={i} className={style.optionItem}>
                 <p>{option.label ?? option.key}:</p>
@@ -126,6 +136,31 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
                   onChange={onIntboxOptionChanged(option)}
                   type="number" />
               </label>))}
+
+              
+          {[...options.values()]
+            ?.filter((v) => v.type === 'RADIO')
+            .map((option, i) => (
+              <div
+                key={i}
+                onChange={onRadioOptionChanged(option)}
+                className={style.optionItem}>
+                <p>{option.label ?? option.key}:</p>
+
+                {option.radios.map((radio, i2) => (
+                  <label key={i2}>
+                    <p>{radio.label ?? radio.value}:</p>
+
+                    <Input
+                      min={1}
+                      name={option.key}
+                      defaultChecked={radio.value === option.value}
+                      value={radio.value}
+                      type="radio" />
+                  </label>
+                ))}
+
+              </div>))}
         </div>
       </div>
 

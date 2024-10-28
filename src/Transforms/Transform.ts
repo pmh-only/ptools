@@ -1,4 +1,5 @@
 import { Base64DecodeTransform, Base64EncodeTransform } from "./Base64Transforms"
+import { DatetimeTransform } from "./DatetimeTransforms"
 import { GzipDecompressTransform } from "./GzipTransform"
 import { JSONBeautifyTransform, JSONEscapeTransform, JSONSimplifyTransform, JSONUnescapeTransform } from "./JSONTransforms"
 import { RegexpTransform } from "./RegexpTransform"
@@ -27,17 +28,20 @@ export interface TransformIntboxOption {
   value?: number
 }
 
+export interface TransformRadioOption {
+  type: 'RADIO',
+  key: string,
+  label?: string,
+  value?: string,
+  radios: {
+    label?: string
+    value: string
+  }[]
+}
+
 export type TransformOption = 
-  TransformCheckboxOption | TransformTextboxOption | TransformIntboxOption
-
-export const isTransformCheckboxOption = (object: any): object is TransformCheckboxOption =>
-  object.type === 'CHECKBOX'
-
-export const isTransformTextboxOption = (object: any): object is TransformTextboxOption =>
-  object.type === 'TEXTBOX'
-
-export const isTransformIntboxOption = (object: any): object is TransformIntboxOption =>
-  object.type === 'INTBOX'
+  TransformCheckboxOption | TransformTextboxOption |
+  TransformIntboxOption | TransformRadioOption
 
 export interface Transform {
   name: string
@@ -77,7 +81,7 @@ export const wrapTransform = (transform: Transform): WrappedTransform => ({
 
 export const transforms: Transform[] = [
   RegexpTransform,
-  GzipDecompressTransform,
+  DatetimeTransform,
   Base64DecodeTransform,
   Base64EncodeTransform,
   URIDecodeTransform,
@@ -87,5 +91,6 @@ export const transforms: Transform[] = [
   JSONEscapeTransform,
   JSONUnescapeTransform,
   JSON2YAMLTransform,
-  YAML2JSONTransform
+  YAML2JSONTransform,
+  GzipDecompressTransform
 ]

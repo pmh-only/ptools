@@ -30,7 +30,7 @@
       scrollbar-color: gray #323232;
       align-items: center;
 
-      .optionItem {
+      * {
         display: flex;
         gap: 6px;
       }

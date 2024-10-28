@@ -16,7 +16,7 @@ export const Editor: FC = () => {
         loading={<></>}
         value={value}
         language="yaml"
-        onChange={(v) => setValue(v?.trim() ?? '')}
+        onChange={(v) => setValue(v ?? '')}
         options={{
           automaticLayout: true,
           lineNumbersMinChars: 3,
