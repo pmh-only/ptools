@@ -14,6 +14,7 @@ import {
   WrappedTransform,
   WrappedTransformResult
 } from "../Transforms/Transform";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 interface TransformGridItemProp {
   transform: WrappedTransform
@@ -22,6 +23,7 @@ interface TransformGridItemProp {
 export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
   const [value, setValue] = useRecoilState(EditorValueState)
   const [options, setOptions] = useState(transform.options)
+  const [closed, setClosed] = useLocalStorage(`transform_closed__${transform.name}`, false)
   const [result, setResult] = useState<WrappedTransformResult>({
     error: false,
     value: ''
@@ -90,13 +92,18 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
   }
 
   return (
-    <div className={style.item}>
+    <div className={clsx(style.item, closed && style.closed)}>
       <div className={style.toolbar}>
         <Button disabled={result.error} onClick={onForwardButtonPressed}>
           &lt;&lt;&lt;
         </Button>
         
-        <h2 className={style.name}>{transform.name}</h2>
+        <h2
+          onClick={() => setClosed(!closed)}
+          className={style.name}>
+
+          {transform.name}
+        </h2>
         
         <div className={style.options}>
           {[...options.values()]
@@ -162,11 +169,13 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
         </div>
       </div>
 
-      <TextArea
-        readOnly
-        value={result.value}
-        placeholder="(empty)"
-        className={clsx(result.error && style.error)} />
+      {!closed &&
+        <TextArea
+          readOnly
+          value={result.value}
+          placeholder="(empty)"
+          className={clsx(result.error && style.error)} />
+      }
     </div>
   )
 }

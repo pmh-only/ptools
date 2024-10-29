@@ -6,6 +6,10 @@
   flex-direction: column;
   min-height: 250px;
 
+  &.closed {
+    min-height: inherit;
+  }
+
   .toolbar {
     display: flex;
     gap: 10px;
@@ -17,6 +21,11 @@
     .name {
       font-size: inherit;
       padding: 14px 6px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline dotted;
+      }
     }
 
     .options {
