@@ -60,7 +60,7 @@ export const Editor: FC = () => {
           <p>The PTOOLS v2</p>
           <p>Made by Minhyeok Park</p>
         </div>
-        <img className={style.koishi} src="/koishi.webp" />
+        <img className={style.suika} src="/suika.webp" />
       </div>
     </motion.div>
   )
