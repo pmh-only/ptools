@@ -15,6 +15,7 @@ import {
   WrappedTransformResult
 } from "../Transforms/Transform";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface TransformGridItemProp {
   transform: WrappedTransform
@@ -169,13 +170,21 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
         </div>
       </div>
 
-      {!closed &&
-        <TextArea
-          readOnly
-          value={result.value}
-          placeholder="(empty)"
-          className={clsx(result.error && style.error)} />
-      }
+      <AnimatePresence>
+        {!closed &&
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: 200 }}
+            exit={{ height: 0 }}
+            className={style.output}>
+            <TextArea
+              readOnly
+              value={result.value}
+              placeholder="(empty)"
+              className={clsx(result.error && style.error)} />
+          </motion.div>
+        }
+      </AnimatePresence>
     </div>
   )
 }

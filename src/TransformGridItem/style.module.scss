@@ -4,11 +4,6 @@
   display: flex;
   padding: 10px;
   flex-direction: column;
-  min-height: 250px;
-
-  &.closed {
-    min-height: inherit;
-  }
 
   .toolbar {
     display: flex;
@@ -44,6 +39,11 @@
         gap: 6px;
       }
     }
+
+  }
+  
+  .output {
+    height: 200px;
   }
   
   .error {

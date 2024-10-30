@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { createRef, FC, useEffect, useRef } from "react";
 import { Editor as MonacoEditor } from "@monaco-editor/react";
 import { useRecoilState } from "recoil";
 import { EditorValueState } from "../GlobalStates/EditorValueState";
@@ -6,9 +6,26 @@ import { motion } from "framer-motion";
 
 export const Editor: FC = () => {
   const [value, setValue] = useRecoilState(EditorValueState)
+  const ref = useRef<any>()
+  const containerRef = createRef<HTMLDivElement>()
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      ref.current?.layout({ width: 0, height: 0 })
+
+      window.requestAnimationFrame(() => {
+        const rect = containerRef.current?.getBoundingClientRect()
+        ref.current?.layout({
+          width: rect?.width ?? 0,
+          height: rect?.height ?? 0
+        })
+      })
+    })
+  }, [])
 
   return (
     <motion.div
+      ref={containerRef}
       transition={{ delay: 1.5 }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}>
@@ -16,6 +33,7 @@ export const Editor: FC = () => {
         loading={<></>}
         value={value}
         language="yaml"
+        onMount={(v) => ref.current = v}
         onChange={(v) => setValue(v ?? '')}
         options={{
           automaticLayout: true,
