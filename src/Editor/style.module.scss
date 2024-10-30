@@ -1,0 +1,21 @@
+.container {
+  position: relative;
+
+  .credit {
+    padding: 1px 0px;
+    position: absolute;
+    z-index: 99999;
+    bottom: 0;
+    right: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    text-align: right;
+    opacity: 0.25;
+
+    .koishi {
+      width: 140px;
+    }
+  }
+}
+

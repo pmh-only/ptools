@@ -4,6 +4,8 @@ import { useRecoilState } from "recoil";
 import { EditorValueState } from "../GlobalStates/EditorValueState";
 import { motion } from "framer-motion";
 
+import style from "./style.module.scss";
+
 export const Editor: FC = () => {
   const [value, setValue] = useRecoilState(EditorValueState)
   const ref = useRef<any>()
@@ -25,6 +27,7 @@ export const Editor: FC = () => {
 
   return (
     <motion.div
+      className={style.container}
       ref={containerRef}
       transition={{ delay: 1.5 }}
       initial={{ opacity: 0 }}
@@ -51,6 +54,14 @@ export const Editor: FC = () => {
           cursorStyle: 'line'
         }}
         theme="vs-dark" />
+
+      <div className={style.credit}>
+        <div className={style.creditstr}>
+          <p>The PTOOLS v2</p>
+          <p>Made by Minhyeok Park</p>
+        </div>
+        <img className={style.koishi} src="/koishi.webp" />
+      </div>
     </motion.div>
   )
 }
