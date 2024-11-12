@@ -52,8 +52,10 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
       return
     }
 
-    setClosed(alreadyClosed)
-    setPreviewDisabled(false)
+    if (previewDisabled) {
+      setClosed(alreadyClosed)
+      setPreviewDisabled(false)
+    }
   }, [value])
 
   const onCheckboxOptionChanged =
