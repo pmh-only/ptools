@@ -5,15 +5,12 @@ on:
 jobs:
   deploy_site:
     runs-on: ubuntu-latest
+    container: 
+      image: src.pmh.codes/build-tools/react2minio:latest
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
-          apt-get install -y nodejs
-          wget https://dl.min.io/client/mc/release/linux-arm64/mc -O /tmp/mc
-          chmod +x /tmp/mc
-          /tmp/mc alias set minio http://minio-service.minio.svc.cluster.local:9000 ${{ secrets.MINIO_ACCESS_KEY }} ${{ secrets.MINIO_SECRET_KEY }}
-      - run: npm i
-      - run: npm run build
+      - run: mc alias set minio http://minio-service.minio.svc.cluster.local:9000 ${{ secrets.MINIO_ACCESS_KEY }} ${{ secrets.MINIO_SECRET_KEY }}
+      - run: pnpm i
+      - run: pnpm build
       - run: /tmp/mc mirror $PWD/dist/ minio/ptools --overwrite
 
