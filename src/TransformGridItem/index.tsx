@@ -32,6 +32,14 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
     value: ''
   })
 
+  const triggerTransform = async () =>
+    await transform
+      .fn(value, options)
+      .then((result) => {
+        setResult(result)
+        return result
+      })
+
   useEffect(() => {
     setAlreadyClosed(closed)
   }, [])
@@ -40,9 +48,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
     if (closed)
       return
 
-    transform
-      .fn(value, options)
-      .then(setResult.bind(this))
+    triggerTransform()
   }, [value, options, closed])
 
   useEffect(() => {
@@ -54,6 +60,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
 
     if (previewDisabled) {
       setClosed(alreadyClosed)
+      triggerTransform()
       setPreviewDisabled(false)
     }
   }, [value])
@@ -107,17 +114,23 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
     setOptions(new Map(options))
   }
 
-  const onForwardButtonPressed = () => {
+  const onForwardButtonPressed = async () => {
+    const result =
+      await triggerTransform()
+
     if (result.error)
       return
 
     setValue(result.value)
   }
 
-  const onLabelClicked = () => {
+  const onLabelClicked = async () => {
     if (previewDisabled)
       return
 
+    if (closed)
+      triggerTransform()
+    
     setClosed(!closed)
     setAlreadyClosed(!closed)
   }
