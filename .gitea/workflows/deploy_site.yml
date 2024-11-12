@@ -12,5 +12,5 @@ jobs:
       - run: mc alias set minio http://minio-service.minio.svc.cluster.local:9000 ${{ secrets.MINIO_ACCESS_KEY }} ${{ secrets.MINIO_SECRET_KEY }}
       - run: pnpm i
       - run: pnpm build
-      - run: /tmp/mc mirror $PWD/dist/ minio/ptools --overwrite
+      - run: mc mirror $PWD/dist/ minio/ptools --overwrite
 
