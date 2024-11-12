@@ -16,9 +16,9 @@
     .name {
       font-size: inherit;
       padding: 14px 6px;
-      cursor: pointer;
-
-      &:hover {
+      
+      &:hover:not(.previewDisabled) {
+        cursor: pointer;
         text-decoration: underline dotted;
       }
     }

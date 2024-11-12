@@ -24,17 +24,37 @@ interface TransformGridItemProp {
 export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
   const [value, setValue] = useRecoilState(EditorValueState)
   const [options, setOptions] = useState(transform.options)
+  const [previewDisabled, setPreviewDisabled] = useState(false)
+  const [alreadyClosed, setAlreadyClosed] = useState(false)
   const [closed, setClosed] = useLocalStorage(`transform_closed__${transform.name}`, false)
   const [result, setResult] = useState<WrappedTransformResult>({
     error: false,
     value: ''
   })
+
+  useEffect(() => {
+    setAlreadyClosed(closed)
+  }, [])
   
   useEffect(() => {
+    if (closed)
+      return
+
     transform
       .fn(value, options)
       .then(setResult.bind(this))
-  }, [value, options])
+  }, [value, options, closed])
+
+  useEffect(() => {
+    if (value.length > 30000) {
+      setClosed(true)
+      setPreviewDisabled(true)
+      return
+    }
+
+    setClosed(alreadyClosed)
+    setPreviewDisabled(false)
+  }, [value])
 
   const onCheckboxOptionChanged =
     (option: TransformCheckboxOption) =>
@@ -92,6 +112,14 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
     setValue(result.value)
   }
 
+  const onLabelClicked = () => {
+    if (previewDisabled)
+      return
+
+    setClosed(!closed)
+    setAlreadyClosed(!closed)
+  }
+
   return (
     <div className={clsx(style.item, closed && style.closed)}>
       <div className={style.toolbar}>
@@ -100,8 +128,8 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
         </Button>
         
         <h2
-          onClick={() => setClosed(!closed)}
-          className={style.name}>
+          onClick={onLabelClicked}
+          className={clsx(style.name, previewDisabled && style.previewDisabled)}>
 
           {transform.name}
         </h2>
