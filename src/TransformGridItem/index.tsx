@@ -25,13 +25,14 @@ interface TransformGridItemProp {
 export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
   const [value, setValue] = useRecoilState(EditorValueState)
   const [options, setOptions] = useState(transform.options)
-  const [previewDisabled, setPreviewDisabled] = useState(false)
-  const [alreadyClosed, setAlreadyClosed] = useState(false)
-  const [closed, setClosed] = useLocalStorage(`transform_closed__${transform.name}`, false)
+  const [closedToggle, setClosedToggle] = useLocalStorage(`transform_closed__${transform.name}`, false)
   const [result, setResult] = useState<WrappedTransformResult>({
     error: false,
     value: ''
   })
+  
+  const previewDisabled = value.length > 30000
+  const closed = previewDisabled || closedToggle
 
   const triggerTransform = async () =>
     await transform
@@ -40,11 +41,8 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
         setResult(result)
         return result
       })
-
-  useEffect(() => {
-    setAlreadyClosed(closed)
-  }, [])
   
+  // trigger transform when value, option or closed state changed
   useEffect(() => {
     if (previewDisabled)
       return
@@ -52,10 +50,20 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
     triggerTransform()
   }, [value, options, closed])
 
+  // reset error state when option changed
   useEffect(() => {
-    if (value.length > 30000) {
-      setClosed(true)
-      setPreviewDisabled(true)
+    if (!previewDisabled)
+      return
+
+    setResult({
+      error: false,
+      value: ''
+    })
+  }, [options])
+
+  // forcely disable preview when value is longer than 30,000 chars
+  useEffect(() => {
+    if (previewDisabled) {
       setResult({
         error: false,
         value: ''
@@ -63,11 +71,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
       return
     }
 
-    if (previewDisabled) {
-      setClosed(alreadyClosed)
-      triggerTransform()
-      setPreviewDisabled(false)
-    }
+    triggerTransform()
   }, [value])
 
   const onCheckboxOptionChanged =
@@ -132,12 +136,8 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
   const onLabelClicked = async () => {
     if (previewDisabled)
       return
-
-    if (closed)
-      triggerTransform()
     
-    setClosed(!closed)
-    setAlreadyClosed(!closed)
+    setClosedToggle(!closed)
   }
 
   return (
@@ -152,7 +152,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
           </Button>
         </div>
 
-        <Tooltip id={`${transform.name}-tooltip`} place="bottom">
+        <Tooltip className={style.error} id={`${transform.name}-tooltip`} place="bottom">
           {previewDisabled && result.error && result.value}
         </Tooltip>
         
