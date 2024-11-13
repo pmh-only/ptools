@@ -3,6 +3,7 @@ import { Editor as MonacoEditor } from "@monaco-editor/react";
 import { useRecoilState } from "recoil";
 import { EditorValueState } from "../GlobalStates/EditorValueState";
 import { motion } from "framer-motion";
+import { VERSION } from "../version";
 
 import style from "./style.module.scss";
 
@@ -57,8 +58,9 @@ export const Editor: FC = () => {
 
       <div className={style.credit}>
         <div className={style.creditstr}>
-          <p>The PTOOLS v2</p>
-          <p>Made by Minhyeok Park</p>
+          <p><b>The PTOOLS</b></p>
+          <p>v2-{VERSION}</p>
+          <p>&copy; Minhyeok Park</p>
         </div>
         <img className={style.suika} src="/suika.webp" />
       </div>

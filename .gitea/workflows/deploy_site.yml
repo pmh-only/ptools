@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: mc alias set minio http://minio-service.minio.svc.cluster.local:9000 ${{ secrets.MINIO_ACCESS_KEY }} ${{ secrets.MINIO_SECRET_KEY }}
+      - run: echo "export const VERSION = '$(git rev-parse --short HEAD)'" > src/version.ts
       - run: pnpm i
       - run: pnpm build
       - run: mc mirror $PWD/dist/ minio/ptools --overwrite
