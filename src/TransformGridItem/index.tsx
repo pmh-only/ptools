@@ -16,6 +16,7 @@ import {
 } from "../Transforms/Transform";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { AnimatePresence, motion } from "framer-motion";
+import { Tooltip } from 'react-tooltip'
 
 interface TransformGridItemProp {
   transform: WrappedTransform
@@ -45,7 +46,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
   }, [])
   
   useEffect(() => {
-    if (closed)
+    if (previewDisabled)
       return
 
     triggerTransform()
@@ -55,6 +56,10 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
     if (value.length > 30000) {
       setClosed(true)
       setPreviewDisabled(true)
+      setResult({
+        error: false,
+        value: ''
+      })
       return
     }
 
@@ -138,9 +143,18 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
   return (
     <div className={clsx(style.item, closed && style.closed)}>
       <div className={style.toolbar}>
-        <Button disabled={result.error} onClick={onForwardButtonPressed}>
-          &lt;&lt;&lt;
-        </Button>
+        <div data-tooltip-id={`${transform.name}-tooltip`}>
+          <Button
+            disabled={result.error}
+            onClick={onForwardButtonPressed}>
+
+            &lt;&lt;&lt;
+          </Button>
+        </div>
+
+        <Tooltip id={`${transform.name}-tooltip`} place="bottom">
+          {previewDisabled && result.error && result.value}
+        </Tooltip>
         
         <h2
           onClick={onLabelClicked}
