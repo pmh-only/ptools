@@ -1,5 +1,6 @@
 import { Base64DecodeTransform, Base64EncodeTransform } from "./Base64Transforms"
 import { DatetimeTransform } from "./DatetimeTransforms"
+import { GzipCompressTransform } from "./GzipCompressTransform"
 import { GzipDecompressTransform } from "./GzipTransform"
 import { JSONBeautifyTransform, JSONEscapeTransform, JSONSimplifyTransform, JSONUnescapeTransform } from "./JSONTransforms"
 import { RegexpTransform } from "./RegexpTransform"
@@ -92,5 +93,6 @@ export const transforms: Transform[] = [
   JSONUnescapeTransform,
   JSON2YAMLTransform,
   YAML2JSONTransform,
+  GzipCompressTransform,
   GzipDecompressTransform
 ]
