@@ -3,8 +3,10 @@ import {
   Base64EncodeTransform
 } from './Base64Transforms'
 import { DatetimeTransform } from './DatetimeTransforms'
-import { GzipCompressTransform } from './GzipCompressTransform'
-import { GzipDecompressTransform } from './GzipTransform'
+import {
+  GzipCompressTransform,
+  GzipDecompressTransform
+} from './GzipTransform'
 import {
   JSONBeautifyTransform,
   JSONEscapeTransform,
@@ -14,6 +16,10 @@ import {
 import { RegexpTransform } from './RegexpTransform'
 import { URIDecodeTransform, URIEncodeTransform } from './URITransforms'
 import { JSON2YAMLTransform, YAML2JSONTransform } from './YAMLTransforms'
+import {
+  PythonDictToJSONTransform,
+  JSONToPythonDictTransform
+} from './PythonTransforms'
 
 export interface TransformCheckboxOption {
   type: 'CHECKBOX'
@@ -103,6 +109,8 @@ export const transforms: Transform[] = [
   JSONUnescapeTransform,
   JSON2YAMLTransform,
   YAML2JSONTransform,
+  PythonDictToJSONTransform,
+  JSONToPythonDictTransform,
   GzipCompressTransform,
   GzipDecompressTransform
 ]

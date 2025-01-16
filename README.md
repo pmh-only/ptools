@@ -13,3 +13,5 @@ A collection of tools for string conversations
 * String Escaper/Unescaper
 * JSON2YAML / YAML2JSON
 * GZIP Zipped Base64 Unzipper
+* Python Dictionary to JSON
+* JSON to Python Dictionary
