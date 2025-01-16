@@ -10,7 +10,7 @@ const compressGzip = async (input: string): Promise<string> => {
   // Check if CompressionStream is supported
   if (typeof CompressionStream === 'undefined') {
     throw new Error(
-      'CompressionStream API is not supported in this environment.',
+      'CompressionStream API is not supported in this environment.'
     )
   }
 
@@ -23,7 +23,7 @@ const compressGzip = async (input: string): Promise<string> => {
     start(controller) {
       controller.enqueue(encoded)
       controller.close()
-    },
+    }
   })
 
   // Create a CompressionStream for Gzip
@@ -78,5 +78,5 @@ export const GzipCompressTransform: Transform = {
 
   fn: (v: string) => compressGzip(v),
 
-  options: [], // Add any options if needed
+  options: [] // Add any options if needed
 }

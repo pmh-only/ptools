@@ -28,8 +28,8 @@ export const DatetimeTransform: Transform = {
           hour: date.getHours(),
           minute: date.getMinutes(),
           second: date.getSeconds(),
-          milli: date.getMilliseconds(),
-        }),
+          milli: date.getMilliseconds()
+        })
       )
       .join('\n')
 
@@ -41,7 +41,7 @@ export const DatetimeTransform: Transform = {
       type: 'RADIO',
       key: 'f',
       value: 'c',
-      radios: [{ value: 'c' }, { value: 'java' }],
-    },
-  ],
+      radios: [{ value: 'c' }, { value: 'java' }]
+    }
+  ]
 }

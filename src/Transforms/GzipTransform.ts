@@ -17,5 +17,5 @@ const decompressGzip = async (base64: string) => {
 export const GzipDecompressTransform: Transform = {
   name: 'gzipd',
 
-  fn: (v) => decompressGzip(v),
+  fn: (v) => decompressGzip(v)
 }

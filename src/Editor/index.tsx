@@ -21,7 +21,7 @@ export const Editor: FC = () => {
         const rect = containerRef.current?.getBoundingClientRect()
         ref.current?.layout({
           width: rect?.width ?? 0,
-          height: rect?.height ?? 0,
+          height: rect?.height ?? 0
         })
       })
     })
@@ -54,7 +54,7 @@ export const Editor: FC = () => {
           smoothScrolling: true,
           cursorSmoothCaretAnimation: 'on',
           cursorBlinking: 'smooth',
-          cursorStyle: 'line',
+          cursorStyle: 'line'
         }}
         theme="vs-dark"
       />

@@ -19,5 +19,5 @@ createRoot(document.getElementById('root')!).render(
 
       <LandingAnimation />
     </RecoilRoot>
-  </StrictMode>,
+  </StrictMode>
 )

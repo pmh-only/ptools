@@ -4,9 +4,9 @@ export const EditorValueState = atom({
   key: 'editor_value',
   default: JSON.stringify(
     {
-      Hello: 'world!',
+      Hello: 'world!'
     },
     null,
-    2,
-  ),
+    2
+  )
 })

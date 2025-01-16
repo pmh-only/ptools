@@ -12,5 +12,5 @@ export const RegexpTransform: Transform = {
       .join('\n')
 
     return [expression, samples, parsedSamples].join('\n\n')
-  },
+  }
 }

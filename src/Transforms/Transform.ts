@@ -1,6 +1,6 @@
 import {
   Base64DecodeTransform,
-  Base64EncodeTransform,
+  Base64EncodeTransform
 } from './Base64Transforms'
 import { DatetimeTransform } from './DatetimeTransforms'
 import { GzipCompressTransform } from './GzipCompressTransform'
@@ -9,7 +9,7 @@ import {
   JSONBeautifyTransform,
   JSONEscapeTransform,
   JSONSimplifyTransform,
-  JSONUnescapeTransform,
+  JSONUnescapeTransform
 } from './JSONTransforms'
 import { RegexpTransform } from './RegexpTransform'
 import { URIDecodeTransform, URIEncodeTransform } from './URITransforms'
@@ -69,7 +69,7 @@ export interface WrappedTransform extends Omit<Transform, 'fn' | 'options'> {
 
   fn: (
     value: string,
-    options: Map<string, TransformOption>,
+    options: Map<string, TransformOption>
   ) => Promise<WrappedTransformResult>
 
   options: Map<string, TransformOption>
@@ -85,9 +85,9 @@ export const wrapTransform = (transform: Transform): WrappedTransform => ({
       .catch((error) => ({ error: true, value: error.toString() })),
 
   options: new Map<string, TransformOption>(
-    (transform.options ?? []).map((v) => [v.key, v]),
+    (transform.options ?? []).map((v) => [v.key, v])
   ),
-  wrapped: true,
+  wrapped: true
 })
 
 export const transforms: Transform[] = [
@@ -104,5 +104,5 @@ export const transforms: Transform[] = [
   JSON2YAMLTransform,
   YAML2JSONTransform,
   GzipCompressTransform,
-  GzipDecompressTransform,
+  GzipDecompressTransform
 ]

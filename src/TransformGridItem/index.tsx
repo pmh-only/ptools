@@ -14,7 +14,7 @@ import {
   TransformRadioOption,
   TransformTextboxOption,
   WrappedTransform,
-  WrappedTransformResult,
+  WrappedTransformResult
 } from '../Transforms/Transform'
 import { useLocalStorage } from '@uidotdev/usehooks'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -30,11 +30,11 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
   const [options, setOptions] = useState(transform.options)
   const [closedToggle, setClosedToggle] = useLocalStorage(
     `transform_closed__${transform.name}`,
-    false,
+    false
   )
   const [result, setResult] = useState<WrappedTransformResult>({
     error: false,
-    value: '',
+    value: ''
   })
 
   const previewDisabled = value.length > 30000
@@ -68,7 +68,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
 
     setResult({
       error: false,
-      value: '',
+      value: ''
     })
   }, [options, previewDisabled])
 
@@ -77,7 +77,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
     if (previewDisabled) {
       setResult({
         error: false,
-        value: '',
+        value: ''
       })
       return
     }
@@ -93,7 +93,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
     (event: ChangeEvent<HTMLInputElement>) => {
       options.set(option.key, {
         ...option,
-        value: event.target.checked,
+        value: event.target.checked
       })
 
       setOptions(new Map(options))
@@ -104,7 +104,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
     (event: ChangeEvent<HTMLInputElement>) => {
       options.set(option.key, {
         ...option,
-        value: event.target.value,
+        value: event.target.value
       })
 
       setOptions(new Map(options))
@@ -115,7 +115,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
     (event: ChangeEvent<HTMLInputElement>) => {
       options.set(option.key, {
         ...option,
-        value: parseInt(event.target.value),
+        value: parseInt(event.target.value)
       })
 
       setOptions(new Map(options))
@@ -126,7 +126,7 @@ export const TransformGridItem: FC<TransformGridItemProp> = ({ transform }) => {
     (event: ChangeEvent<HTMLInputElement>) => {
       options.set(option.key, {
         ...option,
-        value: event.target.value,
+        value: event.target.value
       })
 
       setOptions(new Map(options))

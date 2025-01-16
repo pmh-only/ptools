@@ -7,7 +7,7 @@ import Suika from '../Assets/favicon.webp'
 export const LandingAnimation: FC = () => {
   const [isVisible, setVisible] = useState(true)
   const exitAnimation: TargetAndTransition = {
-    opacity: 0,
+    opacity: 0
   }
 
   useEffect(() => {

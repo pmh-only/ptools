@@ -9,9 +9,9 @@ export const URIDecodeTransform: Transform = {
   options: [
     {
       type: 'CHECKBOX',
-      key: 'cmp',
-    },
-  ],
+      key: 'cmp'
+    }
+  ]
 }
 
 export const URIEncodeTransform: Transform = {
@@ -23,7 +23,7 @@ export const URIEncodeTransform: Transform = {
   options: [
     {
       type: 'CHECKBOX',
-      key: 'cmp',
-    },
-  ],
+      key: 'cmp'
+    }
+  ]
 }
