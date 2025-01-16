@@ -1,5 +1,5 @@
 # PTools
-A collection of tools for string conversations
+A collection of tools for string conversions
 
 ## Demo
 * https://ptools.pmh.codes
