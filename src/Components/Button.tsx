@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Button = styled.button`
   border: none;
@@ -10,7 +10,7 @@ export const Button = styled.button`
 
   transition: background-color 0.25s ease-out;
 
-  &:hover {  
+  &:hover {
     background-color: #da1c9b;
   }
 

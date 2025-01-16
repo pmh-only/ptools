@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Input = styled.input`
   background-color: transparent;
@@ -9,10 +9,10 @@ export const Input = styled.input`
   accent-color: #ff1696;
   box-sizing: border-box;
   font-size: 12px;
-  
+
   width: 24px;
 
-  &[type=checkbox] {
+  &[type='checkbox'] {
     width: auto;
   }
 

@@ -1,6 +1,6 @@
-import { Transform } from "./Transform";
+import { Transform } from './Transform'
 import { strptime } from 'strtime'
-import moment from "moment";
+import moment from 'moment'
 
 export const DatetimeTransform: Transform = {
   name: 'datetime',
@@ -17,34 +17,31 @@ export const DatetimeTransform: Transform = {
 
         if (format === 'java')
           return moment(sample, expression.replace(/'/g, '')).toDate()
-        
+
         throw new Error('Unknown Format')
       })
-      .map((date) => JSON.stringify({
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        date: date.getDate(),
-        hour: date.getHours(),
-        minute: date.getMinutes(),
-        second: date.getSeconds(),
-        milli: date.getMilliseconds()
-      }))
+      .map((date) =>
+        JSON.stringify({
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          date: date.getDate(),
+          hour: date.getHours(),
+          minute: date.getMinutes(),
+          second: date.getSeconds(),
+          milli: date.getMilliseconds(),
+        }),
+      )
       .join('\n')
 
-    return [
-      expression,
-      samples,
-      parsedSamples
-    ].join('\n\n')
+    return [expression, samples, parsedSamples].join('\n\n')
   },
 
-  options: [{
-    type: 'RADIO',
-    key: 'f',
-    value: 'c',
-    radios: [
-      { value: 'c' },
-      { value: 'java' }
-    ]
-  }]
+  options: [
+    {
+      type: 'RADIO',
+      key: 'f',
+      value: 'c',
+      radios: [{ value: 'c' }, { value: 'java' }],
+    },
+  ],
 }

@@ -1,4 +1,4 @@
-import { Transform } from "./Transform";
+import { Transform } from './Transform'
 
 export const RegexpTransform: Transform = {
   name: 'regexp',
@@ -8,14 +8,9 @@ export const RegexpTransform: Transform = {
 
     const parsedSamples = samples
       .split('\n')
-      .map((sample) =>
-        JSON.stringify(regexp.exec(sample)?.groups))
+      .map((sample) => JSON.stringify(regexp.exec(sample)?.groups))
       .join('\n')
 
-    return [
-      expression,
-      samples,
-      parsedSamples
-    ].join('\n\n')
-  }
+    return [expression, samples, parsedSamples].join('\n\n')
+  },
 }

@@ -1,15 +1,16 @@
-import { createRef, FC, useEffect, useRef } from "react";
-import { Editor as MonacoEditor } from "@monaco-editor/react";
-import { useRecoilState } from "recoil";
-import { EditorValueState } from "../GlobalStates/EditorValueState";
-import { motion } from "framer-motion";
-import { VERSION } from "../version";
+import { createRef, FC, useEffect, useRef } from 'react'
+import { Editor as MonacoEditor } from '@monaco-editor/react'
+import { useRecoilState } from 'recoil'
+import { EditorValueState } from '../GlobalStates/EditorValueState'
+import { motion } from 'framer-motion'
+import { VERSION } from '../version'
+import { editor } from 'monaco-editor'
 
-import style from "./style.module.scss";
+import style from './style.module.scss'
 
 export const Editor: FC = () => {
   const [value, setValue] = useRecoilState(EditorValueState)
-  const ref = useRef<any>()
+  const ref = useRef<editor.IStandaloneCodeEditor>()
   const containerRef = createRef<HTMLDivElement>()
 
   useEffect(() => {
@@ -20,11 +21,11 @@ export const Editor: FC = () => {
         const rect = containerRef.current?.getBoundingClientRect()
         ref.current?.layout({
           width: rect?.width ?? 0,
-          height: rect?.height ?? 0
+          height: rect?.height ?? 0,
         })
       })
     })
-  }, [])
+  }, [containerRef])
 
   return (
     <motion.div
@@ -32,33 +33,37 @@ export const Editor: FC = () => {
       ref={containerRef}
       transition={{ delay: 1.5 }}
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}>
+      animate={{ opacity: 1 }}
+    >
       <MonacoEditor
         loading={<></>}
         value={value}
         language="yaml"
-        onMount={(v) => ref.current = v}
+        onMount={(v) => (ref.current = v)}
         onChange={(v) => setValue(v ?? '')}
         options={{
           automaticLayout: true,
           lineNumbersMinChars: 3,
           minimap: { enabled: false },
-          theme: "vs-dark",
+          theme: 'vs-dark',
           fontSize: 24,
           fontFamily: 'JetBrains Mono Variable',
           fontLigatures: true,
-          wordWrap: "on",
+          wordWrap: 'on',
           mouseWheelZoom: true,
           smoothScrolling: true,
           cursorSmoothCaretAnimation: 'on',
           cursorBlinking: 'smooth',
-          cursorStyle: 'line'
+          cursorStyle: 'line',
         }}
-        theme="vs-dark" />
+        theme="vs-dark"
+      />
 
       <div className={style.credit}>
         <div className={style.creditstr}>
-          <p><b>The PTOOLS</b></p>
+          <p>
+            <b>The PTOOLS</b>
+          </p>
           <p>v2-{VERSION}</p>
           <p>&copy; Minhyeok Park</p>
         </div>

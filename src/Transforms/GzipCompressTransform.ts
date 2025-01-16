@@ -1,5 +1,5 @@
 // GzipCompressTransform.ts
-import { Transform } from "./Transform"
+import { Transform } from './Transform'
 
 /**
  * Compresses a string using Gzip and encodes the result in Base64.
@@ -8,8 +8,10 @@ import { Transform } from "./Transform"
  */
 const compressGzip = async (input: string): Promise<string> => {
   // Check if CompressionStream is supported
-  if (typeof CompressionStream === "undefined") {
-    throw new Error("CompressionStream API is not supported in this environment.")
+  if (typeof CompressionStream === 'undefined') {
+    throw new Error(
+      'CompressionStream API is not supported in this environment.',
+    )
   }
 
   // Encode the input string to a Uint8Array
@@ -21,11 +23,11 @@ const compressGzip = async (input: string): Promise<string> => {
     start(controller) {
       controller.enqueue(encoded)
       controller.close()
-    }
+    },
   })
 
   // Create a CompressionStream for Gzip
-  const compressionStream = new CompressionStream("gzip")
+  const compressionStream = new CompressionStream('gzip')
 
   // Pipe the readable stream through the compression stream
   const compressedStream = readable.pipeThrough(compressionStream)
@@ -64,7 +66,7 @@ const compressGzip = async (input: string): Promise<string> => {
  * @returns The Base64-encoded string.
  */
 const arrayBufferToBase64 = (buffer: Uint8Array): string => {
-  let binary = ""
+  let binary = ''
   for (let i = 0; i < buffer.length; i++) {
     binary += String.fromCharCode(buffer[i])
   }
@@ -76,5 +78,5 @@ export const GzipCompressTransform: Transform = {
 
   fn: (v: string) => compressGzip(v),
 
-  options: [] // Add any options if needed
+  options: [], // Add any options if needed
 }

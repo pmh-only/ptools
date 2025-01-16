@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 
 module 'strtime' {
-  function strptime (string, string): Date
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function strptime(string, string): Date
 }
