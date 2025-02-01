@@ -8,7 +8,10 @@ export const RegexpTransform: Transform = {
 
     const parsedSamples = samples
       .split('\n')
-      .map((sample) => JSON.stringify(regexp.exec(sample)?.groups))
+      .map((sample) => regexp.exec(sample))
+      .map((sample, i) =>
+        `${i + 3}(${sample === null ? 'x' : 'o'}) ${JSON.stringify(sample?.groups) ?? ''}`.trimEnd()
+      )
       .join('\n')
 
     return [expression, samples, parsedSamples].join('\n\n')
