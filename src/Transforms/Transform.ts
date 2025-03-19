@@ -17,6 +17,7 @@ import {
   PythonDictToJSONTransform,
   JSONToPythonDictTransform
 } from './PythonTransforms'
+import { CurlTransform } from './CurlTransform'
 
 export interface TransformCheckboxOption {
   type: 'CHECKBOX'
@@ -109,5 +110,6 @@ export const transforms: Transform[] = [
   PythonDictToJSONTransform,
   JSONToPythonDictTransform,
   GzipCompressTransform,
-  GzipDecompressTransform
+  GzipDecompressTransform,
+  CurlTransform
 ]
