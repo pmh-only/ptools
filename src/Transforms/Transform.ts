@@ -3,10 +3,7 @@ import {
   Base64EncodeTransform
 } from './Base64Transforms'
 import { DatetimeTransform } from './DatetimeTransforms'
-import {
-  GzipCompressTransform,
-  GzipDecompressTransform
-} from './GzipTransform'
+import { GzipCompressTransform, GzipDecompressTransform } from './GzipTransform'
 import {
   JSONBeautifyTransform,
   JSONEscapeTransform,
