@@ -33,7 +33,7 @@ jobs:
         run: pnpm build
 
       - name: Deploy to S3
-        run: aws --endpoint-url=https://s3.pmh.codes s3 sync ./dist s3://ptools --delete
+        run: aws  --no-verify-ssl --endpoint-url=https://s3.pmh.codes s3 sync ./dist s3://ptools --delete
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
